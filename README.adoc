@@ -1,0 +1,38 @@
+= Benchmark sorting
+
+Simple project to measure performance of Kotlin-JVM sorting.
+
+For now, only standard library sorting algorithm is tested.
+The test compare calling it directly on an array "in-place",
+or using java.util.Stream or kotlin.Sequence API.
+
+== Run
+
+Project uses kotlinx.benchmark library/gradle plugin.
+Launch benchmark using: `./gradlew benchmark`.
+
+JSON reports are saved in `build/reports/benchmarks/main` directories.
+
+== Sample results
+
+First results run on my (old) laptop show a rather critical drop of performance using stream/sequence APIs:
+
+```
+Benchmark                             (size)   Mode  Cnt         Score        Error  Units
+SortIntegers.array                       100  thrpt    5  15144402.847 ± 211111.189  ops/s
+SortIntegers.array                      1000  thrpt    5   1855851.425 ±  76330.337  ops/s
+SortIntegers.array                     10000  thrpt    5    194062.286 ±   5141.648  ops/s
+SortIntegers.array                    500000  thrpt    5      3646.508 ±    546.078  ops/s
+SortIntegers.javaParallelStream          100  thrpt    5     52834.864 ±    730.144  ops/s
+SortIntegers.javaParallelStream         1000  thrpt    5     15068.881 ±    791.598  ops/s
+SortIntegers.javaParallelStream        10000  thrpt    5      1312.537 ±     21.042  ops/s
+SortIntegers.javaParallelStream       500000  thrpt    5        40.120 ±      1.274  ops/s
+SortIntegers.javaSequentialStream        100  thrpt    5    491841.928 ±  33210.660  ops/s
+SortIntegers.javaSequentialStream       1000  thrpt    5     18933.423 ±    726.078  ops/s
+SortIntegers.javaSequentialStream      10000  thrpt    5      1274.519 ±     25.580  ops/s
+SortIntegers.javaSequentialStream     500000  thrpt    5        17.164 ±      1.468  ops/s
+SortIntegers.kotlinSequence              100  thrpt    5     81999.538 ±   3510.203  ops/s
+SortIntegers.kotlinSequence             1000  thrpt    5      5494.965 ±    180.632  ops/s
+SortIntegers.kotlinSequence            10000  thrpt    5       402.833 ±      5.779  ops/s
+SortIntegers.kotlinSequence           500000  thrpt    5         2.936 ±      0.358  ops/s
+```
