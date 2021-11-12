@@ -39,7 +39,17 @@ class SortIntegers {
     }
 
     @Benchmark
-    fun array() {
+    fun collectKotlinSequenceThenSortInplace() {
+        bucket.asSequence().toList().sorted()
+    }
+
+    @Benchmark
+    fun kotlinSortInplace() {
+        bucket.sort()
+    }
+    
+    @Benchmark
+    fun javaSortInPlace() {
         Arrays.sort(bucket)
     }
 }
